@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSederesponsableTitle}"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="body">
+        <h:form>
+            <p:toolbar style="margin-bottom: 10px; width: 69%; float:left">
+                <f:facet name="left">
+                    <p:selectOneMenu id="unResponsable" value="#{sedeController.responsable}" onchange="#{sedeController.cargarListaSedes()} submit()">
+                       <f:selectItems value="#{responsableController.itemsPorSedes}"/>
+                        <f:converter converterId="responsableConverted"/>
+                    </p:selectOneMenu>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+                       <!--SEGUIR AQUI AAAAAAAAAAAAAAH-->
+        <h:form>
+            <p:dataTable value="#{sedeController.sedesList}" var="sedeResponsable" style="width: 65%;float: left"><!--en la vista los valores que tengan serán los mismos que los del controlador-->
+               <!--esto es de sede-->
+                <p:column headerText="Codigo sede." sortBy="#{sedeResponsable.sede.codSede}" width="30" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.sede.codSede}"/>
+                </p:column>       
+                <p:column headerText="Nombre sede." sortBy="#{sedeResponsable.sede.nomSede}" width="30" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.sede.nomSede}"/>
+                </p:column>
+                <p:column headerText="Dir sede" sortBy="#{sedeResponsable.sede.direccion}" width="30" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.sede.direccion}"/>
+                </p:column>
+               <!--esto de responsable-->
+               <p:column headerText="Codigo responsable" sortBy="#{sedeResponsable.responsable.codResponsable}" width="30" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.responsable.codResponsable}"/>
+                </p:column>
+               <p:column headerText="Nombre responsable" sortBy="#{sedeResponsable.responsable.nomResponsable}" width="30" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.responsable.nomResponsable}"/>
+                </p:column>
+               <!--esto atributos propio de la relacion-->
+               <!--Como un atributo es primary key esta en otra clase llamada sederesponsablePK -->
+               <p:column headerText="Fecha inicio sedeResponsablePK" sortBy="#{sedeResponsable.sederesponsablePK.fechaInicio}" width="30" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.sederesponsablePK.fechaInicio}"/>
+                </p:column>
+               <!--aqui ya los atributos normales de la realcon m.m estan en sedesResponsables-->
+               <p:column headerText="Fecha fin sederesponsable" sortBy="#{sedeResponsable.fechaFin}" width="30" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.fechaFin}"/>
+                </p:column>
+               <p:column headerText="Email sederesponsable" sortBy="#{sedeResponsable.email}" width="65" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.email}"/>
+                </p:column>
+               <p:column headerText="Telefono sederesponsable" sortBy="#{sedeResponsable.telefono}" width="45" style="text-align: center">
+                        <h:outputText value="#{sedeResponsable.telefono}"/>
+                </p:column>
+               <!--Funcionan todo perfectamente, escojes un responsable y te salen todos los datos de la relacion M.M
+               usar a Ines Morales para ver todos los datos, menso telefono ya que no tiene -->
+            </p:dataTable>
+        </h:form>
+   
+        </ui:define>
+    </ui:composition>
+
+</html>

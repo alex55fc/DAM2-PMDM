@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListInspectoriaTitle}"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="body">
+            <h:form>
+                <!--
+                <p:toolbar style="margin-bottom: 10px; width: 69%; float:left">
+                    <f:facet name="left">
+                        <p:selectOneMenu id="unaInspectoria" value="{sedeController.inspectoria}" onchange="{sedeController.cargarLista()} submit()">
+
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <f:facet name="right">
+                        <h:graphicImage library="Autores" name="{libroController.autor.foto}" height="60px"/> 
+                    </f:facet>
+                </p:toolbar>
+                -->
+                <p:toolbar style="margin-bottom: 10px; width: 69%; float:left">
+                    <f:facet name="left">
+                        <p:selectOneMenu id="unaSede" value="#{responsableController.sede}" onchange="#{responsableController.cargarListaResponsables()} submit()">
+                            <f:selectItems value="#{sedeController.itemsPorResponsables}"/>
+                            <f:converter converterId="sedeConverted"/>                    </p:selectOneMenu>
+                    </f:facet>
+                </p:toolbar>
+                <p:dataTable value="#{responsableController.responsablesList}" var="responsableSede" style="width: 65%;float: left"><!--en la vista los valores que tengan serán los mismos que los del controlador-->
+                <!--esto es de sede-->
+                    <p:column headerText="Codigo sede." sortBy="#{responsableSede.sede.codSede}" width="30" style="text-align: center">
+                             <h:outputText value="#{responsableSede.sede.codSede}"/>
+                     </p:column>       
+                     <p:column headerText="Nombre sede." sortBy="#{responsableSede.sede.nomSede}" width="30" style="text-align: center">
+                             <h:outputText value="#{responsableSede.sede.nomSede}"/>
+                     </p:column>
+                     <p:column headerText="Dir sede" sortBy="#{responsableSede.sede.direccion}" width="30" style="text-align: center">
+                             <h:outputText value="#{responsableSede.sede.direccion}"/>
+                     </p:column>
+                    <!--esto de responsable-->
+                    <p:column headerText="Codigo responsable" sortBy="#{responsableSede.responsable.codResponsable}" width="30" style="text-align: center">
+                             <h:outputText value="#{responsableSede.responsable.codResponsable}"/>
+                     </p:column>
+                    <p:column headerText="Nombre responsable" sortBy="#{responsableSede.responsable.nomResponsable}" width="30" style="text-align: center">
+                             <h:outputText value="#{responsableSede.responsable.nomResponsable}"/>
+                     </p:column>
+                    <p:column headerText="Tratamiento responsable" sortBy="#{responsableSede.responsable.tratamiento}" width="30" style="text-align: center">
+                        <h:outputText value="#{responsableSede.responsable.tratamiento}"/>
+                    </p:column>
+                    <p:column headerText="Tipo Misionero responsable" sortBy="#{responsableSede.responsable.tipoMisionero}" width="50" style="text-align: center">
+                        <h:outputText value="#{responsableSede.responsable.tipoMisionero}"/>
+                    </p:column>
+                    
+                    <!--esto atributos propio de la relacion M.M-->
+                    <!--Como un atributo es primary key esta en otra clase llamada sederesponsablePK -->
+                    <p:column headerText="Fecha inicio sedeResponsablePK" sortBy="#{responsableSede.sederesponsablePK.fechaInicio}" width="30" style="text-align: center">
+                             <h:outputText value="#{responsableSede.sederesponsablePK.fechaInicio}"/>
+                     </p:column>
+                    <!--aqui ya los atributos normales de la realcon m.m estan en sedesResponsables-->
+                    <p:column headerText="Fecha fin sederesponsable" sortBy="#{responsableSede.fechaFin}" width="30" style="text-align: center">
+                             <h:outputText value="#{responsableSede.fechaFin}"/>
+                     </p:column>
+                    <p:column headerText="Email sederesponsable" sortBy="#{responsableSede.email}" width="65" style="text-align: center">
+                             <h:outputText value="#{responsableSede.email}"/>
+                     </p:column>
+                    <p:column headerText="Telefono sederesponsable" sortBy="#{responsableSede.telefono}" width="45" style="text-align: center">
+                             <h:outputText value="#{responsableSede.telefono}"/>
+                     </p:column>
+                
+                </p:dataTable>
+
+
+                     
+            </h:form>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>s
+         <p:panel id="panel" header="Insertar en sedesResponsables" style="width: 55%; margin-left: auto; margin-right: auto ">
+                <h:form>              
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="#{bundle.CreateSederesponsableLabel_sederesponsablePK_fechaInicio}" for="sederesponsablePK_fechaInicio" />
+                        <h:inputText id="sederesponsablePK_fechaInicio" value="#{sederesponsableController.selected.sederesponsablePK.fechaInicio}" title="#{bundle.CreateSederesponsableTitle_sederesponsablePK_fechaInicio}" required="true" requiredMessage="#{bundle.CreateSederesponsableRequiredMessage_sederesponsablePK_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:inputText>
+                        <h:outputLabel value="#{bundle.CreateSederesponsableLabel_fechaFin}" for="fechaFin" />
+                        <h:inputText id="fechaFin" value="#{sederesponsableController.selected.fechaFin}" title="#{bundle.CreateSederesponsableTitle_fechaFin}" >
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:inputText>
+                        <h:outputLabel value="#{bundle.CreateSederesponsableLabel_email}" for="email" />
+                        <h:inputText id="email" value="#{sederesponsableController.selected.email}" title="#{bundle.CreateSederesponsableTitle_email}" />
+                        <h:outputLabel value="#{bundle.CreateSederesponsableLabel_telefono}" for="telefono" />
+                        <h:inputText id="telefono" value="#{sederesponsableController.selected.telefono}" title="#{bundle.CreateSederesponsableTitle_telefono}" />
+                        <h:outputLabel value="#{bundle.CreateSederesponsableLabel_responsable}" for="responsable" />
+                        <h:selectOneMenu id="responsable" value="#{sederesponsableController.selected.responsable}" title="#{bundle.CreateSederesponsableTitle_responsable}" required="true" requiredMessage="#{bundle.CreateSederesponsableRequiredMessage_responsable}">
+                            <f:selectItems value="#{responsableController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="#{bundle.CreateSederesponsableLabel_sede}" for="sede" />
+                        <h:selectOneMenu id="sede" value="#{sederesponsableController.selected.sede}" title="#{bundle.CreateSederesponsableTitle_sede}" required="true" requiredMessage="#{bundle.CreateSederesponsableRequiredMessage_sede}">
+                            <f:selectItems value="#{sedeController.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+                        <h:commandButton value="Insertar" action="#{sederesponsableController.insertar}" />
+                    </h:panelGrid>
+                </h:form>
+            </p:panel>           
+        </ui:define>
+    </ui:composition>
+
+</html>
